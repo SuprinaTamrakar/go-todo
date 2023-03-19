@@ -1,0 +1,111 @@
+h1 {
+  text-align: center;
+}
+/* Show the add form and delete all button alongside each other */
+.row {
+  display: flex;
+  align-items: center;
+}
+
+form {
+  margin-bottom: 1px;
+  text-align: center;
+  margin-right: 15px;
+  margin-left: 700px;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+button[type="submit"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.delete-all-btn {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ca5249;
+  color: #fff;
+}
+
+/* Style the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Style the table header */
+th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style the table cells */
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #fff;
+}
+
+/* Style the task status span */
+.task-status {
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 5px;
+  text-transform: uppercase;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+/* Style the done status */
+.done {
+  background-color: rgb(151, 190, 151);
+}
+
+/* Style the pending status */
+.pending {
+  background-color: rgb(136, 182, 235);
+}
+
+/* Style the conversion buttons */
+.conversion-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+
+/* Style the convert button */
+.convert-button {
+  margin-right: 5px;
+}
+
+/* Style the edit and delete buttons */
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 5px;
+  padding: 5px;
+  text-transform: uppercase;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
