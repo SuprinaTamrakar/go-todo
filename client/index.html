@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo App</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body>
+    <h1>Todo App</h1>
+    <div class="row">
+      <form id="add-form">
+        <input type="text" id="add-input" placeholder="Add task" />
+        <button type="submit" id="add-btn">Add Task</button>
+      </form>
+      <button class="delete-all-btn" id="delete-all-btn">Delete All</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Task</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="task-list">
+
+      </tbody>
+    </table>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>
