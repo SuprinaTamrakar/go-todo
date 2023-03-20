@@ -22,11 +22,18 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody id="task-list">
-
-      </tbody>
+      <tbody id="task-list"></tbody>
     </table>
-
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <h1>Edit Task</h2>
+          <form id="editForm" class="editForm">
+            <input type="text" id="editInput" name="task" required />
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button class="close-button" onclick="document.getElementById('editModal').style.display = 'none'">Cancel</button>
+        </form>
+      </div>
+    </div>
     <script src="js/script.js"></script>
   </body>
 </html>
