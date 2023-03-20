@@ -109,3 +109,20 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.modal {
+  display: none;
+}
+
+.editForm {
+  display: flex;
+  padding-left: 80px;
+}
+
+.close-button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ca5249;
+    color: #fff;
+}

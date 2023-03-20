@@ -16,12 +16,12 @@ function getAllTask(event) {
     .then((response) => response.json())
     .then((data) => {
       // Loop through the data and insert it into the table
-      data.forEach((task) => {
+      data.forEach((task, index) => {
         const row = document.createElement("tr");
         // Add a class based on the status of the task
         row.classList.add(task.status ? "done" : "pending");
         row.innerHTML = `
-				<td>${task._id}</td>
+				<td>${index + 1}</td>
 				<td>${task.task}</td>
 				<td>
             <span class="task-status ${task.status ? "done" : "pending"}">
@@ -71,7 +71,50 @@ function addTask(event) {
 }
 
 function editTask(id) {
-  // TODO: implement edit functionality
+  // Find the task with the given id in the data array
+  fetch(endpoint + "/" + id)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (!data) {
+        console.error(`Task with id ${id} not found`);
+        return;
+      }
+
+      // Populate the edit modal with the task data
+      const editModal = document.getElementById("editModal");
+      const editForm = document.getElementById("editForm");
+      const editInput = document.getElementById("editInput");
+      editInput.value = data.task;
+
+      // Show the edit modal
+      editModal.style.display = "block";
+
+      // Handle form submission
+      editForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const taskText = editInput.value.trim();
+        if (taskText) {
+          fetch(baseEndpoint + "/updateTask/" + id, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ task: taskText }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                // Reload the window to show the updated task
+                location.reload();
+              } else {
+                throw new Error("Failed to update task");
+              }
+            })
+            .catch((error) => console.error(error));
+        }
+      });
+    })
+    .catch((error) => console.error(error));
 }
 
 function deleteTask(taskId) {
@@ -114,7 +157,9 @@ function completeTask(taskId) {
 }
 
 function deleteAllTask() {
-  const confirmation = confirm("Are you sure you want to delete all your tasks?");
+  const confirmation = confirm(
+    "Are you sure you want to delete all your tasks?"
+  );
   if (confirmation) {
     const deleteAllEndpoint = baseEndpoint + "/deleteAllTask";
     fetch(deleteAllEndpoint, {

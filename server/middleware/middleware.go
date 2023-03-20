@@ -133,6 +133,52 @@ func DeleteAllTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// GetTask get the task route
+func GetTask(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	params := mux.Vars(r)
+
+	id, err := primitive.ObjectIDFromHex(params["id"])
+	if err != nil {
+		http.Error(w, "Invalid task ID", http.StatusBadRequest)
+		return
+	}
+
+	// Query the database for the task with the given ID
+	var task models.ToDoList
+	err = collection.FindOne(context.Background(), bson.M{"_id": id}).Decode(&task)
+	if err != nil {
+		http.Error(w, "Task not found", http.StatusNotFound)
+		return
+	}
+
+	// Return the task as a JSON response
+	json.NewEncoder(w).Encode(task)
+}
+
+// UpdateTask update the task route
+func UpdateTask(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "PUT")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+
+	params := mux.Vars(r)
+
+	var task models.ToDoList
+	_ = json.NewDecoder(r.Body).Decode(&task)
+	success := updateTask(task, params["id"])
+	// Create a map with the success value
+	response := map[string]bool{"success": success}
+	json.NewEncoder(w).Encode(response)
+}
+
 // get all task from the DB and return it
 func getAllTask() []primitive.M {
 	cur, err := collection.Find(context.Background(), bson.D{{}})
@@ -224,4 +270,20 @@ func deleteAllTask() int64 {
 
 	fmt.Println("Deleted Document", d.DeletedCount)
 	return d.DeletedCount
+}
+
+// task update method, update task's status to false
+func updateTask(task models.ToDoList, taskId string) bool {
+	id, _ := primitive.ObjectIDFromHex(taskId)
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"task": task.Task}}
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if result.ModifiedCount == 1 {
+		return true
+	}
+	fmt.Println("modified count: ", result.ModifiedCount)
+	return false
 }
